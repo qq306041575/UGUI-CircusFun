@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class JokerController : MonoBehaviour
 {
+    const float MatchHeight = 1080f;
+
     public float MoveSpeed;
 
     Rigidbody2D _jokerBody;
     Animator _jokerAnimator;
     GameObject _colliderObject;
     Vector3 _position;
+    Vector2 _jumpForce;
 
     void Awake()
     {
         _jokerBody = GetComponent<Rigidbody2D>();
         _jokerAnimator = GetComponentInChildren<Animator>();
         _position = transform.position;
+        _jumpForce = Vector2.up * (MoveSpeed - MatchHeight * 10 + Screen.height * 10);
     }
 
     void OnEnable()
@@ -55,7 +59,7 @@ public class JokerController : MonoBehaviour
 
     public void Jump()
     {
-        _jokerBody.AddForce(Vector2.up * MoveSpeed);
+        _jokerBody.AddForce(_jumpForce);
         _jokerAnimator.SetTrigger("Jump");
     }
 }
